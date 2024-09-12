@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+
+.kanban-board {
+  display: flex;
+  gap: 20px;
+}
+
+.kanban-list {
+  width: 200px;
+}
+
+.kanban-task {
+  background: #f0f0f0;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
