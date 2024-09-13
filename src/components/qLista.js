@@ -11,7 +11,7 @@ const KanbanTodo = () => {
   const [newTask, setNewTask] = useState('');
   const [editTask, setEditTask] = useState(null);
   const [deleteConfirm, setDeleteConfirm] = useState(null);
-  const [selectedList, setSelectedList] = useState('todo');
+  const [selectedList, setSelectedList] = useState('doing');
 
   const [tasks, setTasks] = useState(() => {
     const storedTasks = localStorage.getItem('kanbanTasks');
@@ -31,6 +31,7 @@ const KanbanTodo = () => {
         todo: [...prev.todo, { id: Date.now(), text: newTask }]
       }));
       setNewTask('');
+      setSelectedList('todo'); // Switch to "To Do" list after adding a new task
     }
   };
 
@@ -59,6 +60,7 @@ const KanbanTodo = () => {
       [fromList]: prev[fromList].filter(task => task.id !== id),
       [toList]: [...prev[toList], taskToMove]
     }));
+    setSelectedList(toList);
   };
 
   const TaskList = ({ tasks, onEdit, onDelete, onMoveForward, onMoveBack }) => (
