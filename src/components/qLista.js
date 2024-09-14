@@ -89,24 +89,37 @@ const KanbanTodo = () => {
     </Paper>
   );
 
-  const EditTaskDialog = ({ open, task, onSave, onClose }) => (
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Edit Task</DialogTitle>
-      <DialogContent>
-        <TextField
-          autoFocus
-          margin="dense"
-          fullWidth
-          value={task.text}
-          onChange={(e) => onSave({ ...task, text: e.target.value })}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={() => onSave(task)}>Save</Button>
-      </DialogActions>
-    </Dialog>
-  );
+  const EditTaskDialog = ({ open, task, onSave, onClose }) => {
+    const [taskText, setTaskText] = useState(task.text);
+  
+    useEffect(() => {
+      setTaskText(task.text);
+    }, [task]);
+  
+    const handleSave = () => {
+      onSave({ ...task, text: taskText });
+    };
+  
+    return (
+      <Dialog open={open} onClose={onClose}>
+        <DialogTitle>Edit Task</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            fullWidth
+            value={taskText}
+            onChange={(e) => setTaskText(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={onClose}>Cancel</Button>
+          <Button onClick={handleSave}>Save</Button>
+        </DialogActions>
+      </Dialog>
+    );
+  };
+  
 
   const DeleteConfirmationDialog = ({ open, onClose, onConfirm }) => (
     <Dialog open={open} onClose={onClose}>
